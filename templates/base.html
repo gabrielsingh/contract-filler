@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Contracts Explorer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root { --gap: 16px; --bg: #0b0f14; --card:#11161d; --muted:#9fb0c0; --accent:#5aa9e6; --ok:#3ecf8e; --warn:#f2b01e; --err:#ff5d5d; }
+    body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; background: var(--bg); color:#e8eef4; }
+    a { color: var(--accent); text-decoration: none; }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    header { display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px; }
+    .card { background: var(--card); border-radius: 12px; padding: 16px; box-shadow: 0 4px 16px rgba(0,0,0,.3); }
+    .grid-2 { display:grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+    .list { display: grid; gap: 8px; }
+    .row { padding:12px; border:1px solid #1e2833; border-radius: 10px; background: #0e141b; }
+    label { display:block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+    input, textarea, select { width:100%; padding:10px; border-radius:8px; border:1px solid #213041; background:#0c1219; color:#e8eef4; }
+    button { background: var(--accent); color:#061018; border:0; border-radius:10px; padding:10px 14px; font-weight:600; cursor:pointer; }
+    .muted { color: var(--muted); }
+    .flash { padding: 10px 12px; border-radius: 10px; margin-bottom: 12px; }
+    .flash.success { background: rgba(62,207,142,.15); border:1px solid rgba(62,207,142,.4); }
+    .flash.warning { background: rgba(242,176,30,.15); border:1px solid rgba(242,176,30,.4); }
+    .flash.error { background: rgba(255,93,93,.15); border:1px solid rgba(255,93,93,.4); }
+    iframe { width:100%; height: 80vh; border:0; background:#0c1219; }
+    table { width:100%; border-collapse: collapse; }
+    th, td { padding: 8px 10px; border-bottom: 1px solid #1e2833; text-align: left; }
+    .top-actions { display:flex; gap:8px; align-items:center; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1><a href="{{ url_for('home') }}">Contracts Explorer</a></h1>
+      <div class="top-actions">
+        <form action="{{ url_for('pick') }}" method="post" style="display:flex; gap:8px; align-items:center;">
+          <input name="cpf_assinante" placeholder="CPF" />
+          <input name="nome_assinante" placeholder="Nome" />
+          <input name="cnpj_assinante" placeholder="CNPJ" />
+          <button type="submit">Find Cluster</button>
+        </form>
+      </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, msg in messages %}
+          <div class="flash {{category}}">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}
+      {{ content|safe if content }}
+    {% endblock %}
+  </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="grid-2">
+    <div class="card">
+      <h2 style="margin-top:0;">PDF</h2>
+      {% if pdf_exists %}
+        <iframe src="{{ url_for('serve_pdf', filename=pdf_filename) }}"></iframe>
+      {% else %}
+        <p class="muted">PDF not found in <code>{{ pdf_filename }}</code> inside <code>{{ config['PDF_DIR'] if config and config.PDF_DIR else 'PDF_DIR' }}</code>. Check <code>file_name</code> and your directory.</p>
+      {% endif %}
+    </div>
+
+    <div class="card">
+      <h2 style="margin-top:0;">Structured data</h2>
+      <form action="{{ url_for('update', row_index=row_index) }}" method="post" class="list">
+        {% for f in fields %}
+          <div>
+            <label>{{ f.label }}</label>
+            <input name="{{ f.safe }}" value="{{ f.value|e }}">
+          </div>
+        {% endfor %}
+        <div style="display:flex; gap:8px;">
+          <button type="submit">Save changes (append to edits CSV)</button>
+          <a href="{{ url_for('cluster', row_index=row_index) }}"><button type="button">Back to cluster</button></a>
+        </div>
+        <p class="muted">Edits are appended to <code>{{ config['EDITS_CSV_PATH'] if config and config.EDITS_CSV_PATH else 'contracts_edits.csv' }}</code>. The original CSV is never modified.</p>
+      </form>
+    </div>
+  </div>
+{% endblock %}

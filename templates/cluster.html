@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="card">
+    <h2>Cluster for seed: <span class="muted">{{ seed.get(id_col, '—') }}</span></h2>
+    <p class="muted">Matches any of these from the seed: <code>cpf_assinante</code>, <code>nome_assinante</code>, <code>cnpj_assinante</code></p>
+    <table>
+      <thead>
+        <tr>
+          <th>{{ id_col }}</th>
+          <th>file_name</th>
+          <th>cpf</th>
+          <th>nome</th>
+          <th>cnpj</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in rows %}
+          <tr>
+            <td>{{ r.get(id_col, '—') }}</td>
+            <td>{{ r.get('file_name','') }}</td>
+            <td>{{ r.get('cpf_assinante','') }}</td>
+            <td>{{ r.get('nome_assinante','') }}</td>
+            <td>{{ r.get('cnpj_assinante','') }}</td>
+            <td><a href="{{ url_for('contract', row_index=r.get('_row_index')) }}">Open</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

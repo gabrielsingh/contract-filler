@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="card">
+    <h2>Start by picking a row (CPF + Nome + CNPJ)</h2>
+    <p class="muted">We’ll form a cluster of all contracts that share <em>any</em> of these three identifiers with your seed row.</p>
+    <form action="{{ url_for('pick') }}" method="post" class="grid-2" style="align-items:end;">
+      <div>
+        <label>cpf_assinante</label>
+        <input name="cpf_assinante" placeholder="000.000.000-00">
+      </div>
+      <div>
+        <label>nome_assinante</label>
+        <input name="nome_assinante" placeholder="Nome completo">
+      </div>
+      <div>
+        <label>cnpj_assinante</label>
+        <input name="cnpj_assinante" placeholder="00.000.000/0000-00">
+      </div>
+      <div><button type="submit">Build Cluster</button></div>
+    </form>
+  </div>
+{% endblock %}

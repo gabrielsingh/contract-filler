@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="card">
+    <h2>No exact match – pick a seed row from partial matches</h2>
+    <div class="list">
+      {% for r in rows %}
+        <div class="row">
+          <div><strong>{{ r.get(id_col, '—') }}</strong></div>
+          <div class="muted">
+            CPF: {{ r.get('cpf_assinante','') }} &nbsp;•&nbsp;
+            Nome: {{ r.get('nome_assinante','') }} &nbsp;•&nbsp;
+            CNPJ: {{ r.get('cnpj_assinante','') }}
+          </div>
+          <div style="margin-top:8px;">
+            <a href="{{ url_for('cluster', row_index=r.get('_row_index')) }}"><button>Use as seed</button></a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
